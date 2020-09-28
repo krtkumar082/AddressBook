@@ -28,33 +28,59 @@ public class AddressBookMain {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book");
 		Scanner sc = new Scanner(System.in);
-		ArrayList<AddressBookMain> book = new ArrayList<AddressBookMain>();
-		System.out.println("Enter the Number of persons you want to add in Address book: ");
-		int number = Integer.parseInt(sc.nextLine());
-		for(int i=0;i<number;i++) {
-			System.out.println("Enter the contact details of person "+(i+1)+": ");
-			System.out.println("Enter the first name:");
-			String firstName = sc.nextLine();
-			System.out.println("Enter the last name:");
-			String lastName = sc.nextLine();
-			System.out.println("Enter the EMail:");
-			String Email = sc.nextLine();
-			System.out.println("Enter the Address:");
-			String Address = sc.nextLine();
-			System.out.println("Enter the City:");
-			String city = sc.nextLine();
-			System.out.println("Enter the State:");
-			String state = sc.nextLine();
-			System.out.println("Enter the zip:");
-			int zip = Integer.parseInt(sc.nextLine());
-			System.out.println("Enter the phone number:");
-			String phoneNumber = sc.nextLine();
-			AddressBookMain contact = new AddressBookMain(firstName,lastName,Email,Address,city,state,zip,phoneNumber);
-			book.add(contact);
+		System.out.println("Enter the number of address books you want to add: ");
+		HashMap<String, ArrayList<AddressBookMain>> bookColl = new HashMap<String, ArrayList<AddressBookMain>>();
+		int numOfAddressBooks = Integer.parseInt(sc.nextLine());
+		for (int j = 0; j < numOfAddressBooks; j++) {
+			String bookName;
+			while(true) {
+			System.out.println("Enter the name of the address book:");
+			bookName = sc.nextLine();
+			int found = 0;
+				for (Map.Entry<String, ArrayList<AddressBookMain>> entry : bookColl.entrySet()) {
+					if(entry.getKey().equals(bookName)) {
+						found=1;
+					}
+				}
+				if(found == 0) {
+					break;
+				}
+				else {
+					System.out.println("already registerd with the name, try adding new book name");
+				}
+			}
+			ArrayList<AddressBookMain> book = new ArrayList<AddressBookMain>();
+			System.out.println("Enter the Number of persons you want to add in Address book: ");
+			int number = Integer.parseInt(sc.nextLine());
+			for (int i = 0; i < number; i++) {
+				System.out.println("Enter the contact details of person " + (i + 1) + ": ");
+				System.out.println("Enter the first name:");
+				String firstName = sc.nextLine();
+				System.out.println("Enter the last name:");
+				String lastName = sc.nextLine();
+				System.out.println("Enter the EMail:");
+				String Email = sc.nextLine();
+				System.out.println("Enter the Address:");
+				String Address = sc.nextLine();
+				System.out.println("Enter the City:");
+				String city = sc.nextLine();
+				System.out.println("Enter the State:");
+				String state = sc.nextLine();
+				System.out.println("Enter the zip:");
+				int zip = Integer.parseInt(sc.nextLine());
+
+				System.out.println("Enter the phone number:");
+				String phoneNumber = sc.nextLine();
+				AddressBookMain contact = new AddressBookMain(firstName, lastName, Email, Address, city, state, zip,
+						phoneNumber);
+				book.add(contact);
+			}
+			bookColl.put(bookName, book);
 		}
 		sc.close();
-		for(int j=0;j<book.size();j++) {
-			System.out.println("The contact details of person "+(j+1)+" are: "+book.get(j));
+		for (Map.Entry<String, ArrayList<AddressBookMain>> entry : bookColl.entrySet()) {
+			System.out.println("The details of Address Book " + entry.getKey() + " is: ");
+			System.out.println(entry.getValue());
 		}
 	}
 }
